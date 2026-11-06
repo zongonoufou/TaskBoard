@@ -39,7 +39,7 @@ public class AuthController {
         // S'ils sont incorrects, une exception sera levée ici.
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginRequestDTO.getMail(),
+                        loginRequestDTO.getEmail(),
                         loginRequestDTO.getPassword()
                 )
         );

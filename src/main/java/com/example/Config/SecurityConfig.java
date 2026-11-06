@@ -15,8 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.example.Config.security.EmployeeUserDetailsService;
-import com.example.Config.security.JwtAuthenticationFilter;
+import com.example.Security.UserDetailService;
+import com.example.Security.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -77,8 +77,10 @@ public class SecurityConfig {
 
                         // Swagger / OpenAPI autorisés sans token
                         .requestMatchers(
+                                "/v3/api-docs/**",
                                 "/api-docs/**",
                                 "/swagger-ui/**",
+                                "/docs/**",
                                 "/swagger-ui.html")
                         .permitAll()
 
@@ -86,12 +88,12 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
 
                         // POUR LE COURS : On autorise cette route pour le test microservice avec Taskboard
-                        .requestMatchers(HttpMethod.GET, "/employee/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/users").permitAll()
 
                         // Authentification et création de compte (pas de token requis ici, on vient pour s'authentifier)
-                        .requestMatchers(HttpMethod.POST, "/employee").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/employees").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/employees").permitAll()
                         // TOUTES LES AUTRES REQUÊTES nécessitent un token valide
                         .anyRequest().authenticated())
                         
